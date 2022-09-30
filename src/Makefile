@@ -407,12 +407,12 @@ endif
 # Default target entry
 # NOTE: We call this Makefile target or Makefile.Android target
 all:
-	sudo mkdir -p $(BUILD_DIRECTORY)
+	mkdir -p $(BUILD_DIRECTORY)
 	$(MAKE) $(MAKEFILE_PARAMS)
 
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS)
-	sudo $(CC) -o ${BUILD_DIRECTORY}/$(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o ${BUILD_DIRECTORY}/$(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # Compile source files
 # NOTE: This pattern will compile every module defined on $(OBJS)

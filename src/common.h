@@ -30,3 +30,7 @@ exit(1); \ }\
 #define numberof(x) (sizeof(x) / sizeof(*(x)))
 
 #define STR_LEN(str) (str), (sizeof(str)-1)
+
+#ifndef NULL
+#define NULL (0)
+#endif

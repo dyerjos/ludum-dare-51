@@ -64,6 +64,4 @@ dkms.conf
 
 # ***** personal gitignores ***********
 web_build
-
-# TODO: comment out for game jams
 dev
