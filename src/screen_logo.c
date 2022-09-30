@@ -18,7 +18,12 @@ static int leftSideRecHeight = 0;
 static int bottomSideRecWidth = 0;
 static int rightSideRecHeight = 0;
 
-static int state = 0;              // Logo animation states
+// static int state = 0;              // Logo animation states
+enum logo_state { RAYLIB_I, RAYLIB_II, RAYLIB_III, RAYLIB_IIII, ROJAFOX_LOGO };
+static enum logo_state state = RAYLIB_I;
+
+static Texture2D rojafox_logo = { 0 };
+
 static float alpha = 1.0f;         // Useful for fading
 
 //----------------------------------------------------------------------------------
@@ -40,38 +45,42 @@ void InitLogoScreen(void)
     bottomSideRecWidth = 16;
     rightSideRecHeight = 16;
 
-    state = 0;
+    // state = 0;
+	state = RAYLIB_I;
+
     alpha = 1.0f;
+
+	rojafox_logo = LoadTexture("resources/fox.jpg");
 }
 
 // Logo Screen Update logic
 void UpdateLogoScreen(void)
 {
-    if (state == 0)                 // State 0: Top-left square corner blink logic
+    if (state == RAYLIB_I)                 // State 0: Top-left square corner blink logic
     {
         framesCounter++;
 
         if (framesCounter == 80)
         {
-            state = 1;
+            state = RAYLIB_II;
             framesCounter = 0;      // Reset counter... will be used later...
         }
     }
-    else if (state == 1)            // State 1: Bars animation logic: top and left
+    else if (state == RAYLIB_II)            // State 1: Bars animation logic: top and left
     {
         topSideRecWidth += 8;
         leftSideRecHeight += 8;
 
-        if (topSideRecWidth == 256) state = 2;
+        if (topSideRecWidth == 256) state = RAYLIB_III;
     }
-    else if (state == 2)            // State 2: Bars animation logic: bottom and right
+    else if (state == RAYLIB_III)            // State 2: Bars animation logic: bottom and right
     {
         bottomSideRecWidth += 8;
         rightSideRecHeight += 8;
 
-        if (bottomSideRecWidth == 256) state = 3;
+        if (bottomSideRecWidth == 256) state = RAYLIB_IIII;
     }
-    else if (state == 3)            // State 3: "raylib" text-write animation logic
+    else if (state == RAYLIB_IIII)            // State 3: "raylib" text-write animation logic
     {
         framesCounter++;
 
@@ -92,26 +101,36 @@ void UpdateLogoScreen(void)
                 if (alpha <= 0.0f)
                 {
                     alpha = 0.0f;
-                    finishScreen = 1;   // Jump to next screen
+                    // finishScreen = 1;   // Jump to next screen
+					state = ROJAFOX_LOGO;
                 }
             }
         }
+    }
+	else if (state == ROJAFOX_LOGO)            // State 3: "raylib" text-write animation logic
+    {
+        framesCounter++;
+
+		if (framesCounter > 500)
+		{
+			finishScreen = 1;   // Jump to next screen
+		}
     }
 }
 
 // Logo Screen Draw logic
 void DrawLogoScreen(void)
 {
-    if (state == 0)         // Draw blinking top-left square corner
+    if (state == RAYLIB_I)         // Draw blinking top-left square corner
     {
         if ((framesCounter/10)%2) DrawRectangle(logoPositionX, logoPositionY, 16, 16, BLACK);
     }
-    else if (state == 1)    // Draw bars animation: top and left
+    else if (state == RAYLIB_II)    // Draw bars animation: top and left
     {
         DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, BLACK);
         DrawRectangle(logoPositionX, logoPositionY, 16, leftSideRecHeight, BLACK);
     }
-    else if (state == 2)    // Draw bars animation: bottom and right
+    else if (state == RAYLIB_III)    // Draw bars animation: bottom and right
     {
         DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, BLACK);
         DrawRectangle(logoPositionX, logoPositionY, 16, leftSideRecHeight, BLACK);
@@ -119,7 +138,7 @@ void DrawLogoScreen(void)
         DrawRectangle(logoPositionX + 240, logoPositionY, 16, rightSideRecHeight, BLACK);
         DrawRectangle(logoPositionX, logoPositionY + 240, bottomSideRecWidth, 16, BLACK);
     }
-    else if (state == 3)    // Draw "raylib" text-write animation + "powered by"
+    else if (state == RAYLIB_IIII)    // Draw "raylib" text-write animation + "powered by"
     {
         DrawRectangle(logoPositionX, logoPositionY, topSideRecWidth, 16, Fade(BLACK, alpha));
         DrawRectangle(logoPositionX, logoPositionY + 16, 16, leftSideRecHeight - 32, Fade(BLACK, alpha));
@@ -131,8 +150,12 @@ void DrawLogoScreen(void)
 
         DrawText(TextSubtext("raylib", 0, lettersCount), GetScreenWidth()/2 - 44, GetScreenHeight()/2 + 48, 50, Fade(BLACK, alpha));
 
-        if (framesCounter > 20) DrawText("powered by test test", logoPositionX, logoPositionY - 27, 20, Fade(DARKGRAY, alpha));
+        if (framesCounter > 20) DrawText("powered by", logoPositionX, logoPositionY - 27, 20, Fade(DARKGRAY, alpha));
     }
+	else if (state == ROJAFOX_LOGO)
+	{
+		DrawTexture(rojafox_logo, logoPositionX, logoPositionY, WHITE);
+	}
 }
 
 // Logo Screen Unload logic
