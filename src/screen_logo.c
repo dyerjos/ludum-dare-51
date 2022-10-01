@@ -172,6 +172,7 @@ void DrawLogoScreen(void)
 void UnloadLogoScreen(void)
 {
     // Unload LOGO screen variables here!
+	UnloadTexture(rojafox_logo);
 }
 
 // Logo Screen should finish?

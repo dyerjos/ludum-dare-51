@@ -66,11 +66,15 @@ int main(void)
     //---------------------------------------------------------
     InitWindow(screenWidth, screenHeight, gameName);
 
-    InitAudioDevice();      // Initialize audio device
+	// TODO: re-enable for audio
+    // InitAudioDevice();      // Initialize audio device
 
     // Load global data (assets that must be available in all screens, i.e. font)
     // font = LoadFont("resources/mecha.png");
-    font = LoadFont("resources/font/osaka-re.ttf");
+    // font = LoadFont("resources/font/osaka-re.ttf");
+    // font = LoadFont("resources/font/Gamer.ttf");
+    // font = LoadFont("resources/font/MinimalFont.ttf");
+	font = LoadFont("resources/font/BladesGFFree.ttf");
 
     // music = LoadMusicStream("resources/ambient.ogg");
     // fxCoin = LoadSound("resources/coin.wav");
@@ -81,11 +85,13 @@ int main(void)
 
 
     // Setup and init first screen
-    currentScreen = LOGO;
+    // currentScreen = LOGO; // TODO: renable after testing
+	currentScreen = GAMEPLAY;
+
     InitLogoScreen();
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
