@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "screens.h"
+#include "common.h" 	// Beej assert macro
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
@@ -45,12 +46,12 @@ void InitLogoScreen(void)
     bottomSideRecWidth = 16;
     rightSideRecHeight = 16;
 
-    // state = 0;
-	state = RAYLIB_I;
+	// state = RAYLIB_I; // TODO: switch back
+	state = ROJAFOX_LOGO;
 
     alpha = 1.0f;
 
-	rojafox_logo = LoadTexture("resources/fox.jpg");
+	rojafox_logo = LoadTexture("resources/fox_.png");
 }
 
 // Logo Screen Update logic
@@ -107,11 +108,11 @@ void UpdateLogoScreen(void)
             }
         }
     }
-	else if (state == ROJAFOX_LOGO)            // State 3: "raylib" text-write animation logic
+	else if (state == ROJAFOX_LOGO)            // State 4: my custom logo screen
     {
         framesCounter++;
 
-		if (framesCounter > 500)
+		if (framesCounter > 150)
 		{
 			finishScreen = 1;   // Jump to next screen
 		}
@@ -154,7 +155,16 @@ void DrawLogoScreen(void)
     }
 	else if (state == ROJAFOX_LOGO)
 	{
-		DrawTexture(rojafox_logo, logoPositionX, logoPositionY, WHITE);
+		DrawText("RojaFox", GetScreenWidth()/2 - 120, GetScreenHeight()/2 - 160, 50, BLACK);
+
+		// Fox logo ---------------
+		static const int screenWidth = 800;
+		static const int screenHeight = 450;
+    	float imageScale = 1.1f;
+		float logo_height = 164.0f;
+		float logo_width = 123.0f;
+
+		DrawTextureEx(rojafox_logo, (Vector2){ screenWidth / 2 - logo_width * imageScale / 2, screenHeight / 2 - logo_height * imageScale / 2 }, 0.0f, imageScale, WHITE);
 	}
 }
 

@@ -65,3 +65,4 @@ dkms.conf
 # ***** personal gitignores ***********
 web_build
 dev
+.idea
