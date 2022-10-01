@@ -1,16 +1,16 @@
-## $(Game Title)
+## Artful Arrows
 
-![$(Game Title)](screenshots/screenshot000.png "$(Game Title)")
+![Artful Arrows](screenshots/screenshot000.png "Artful Arrows")
 
 ### Description
 
-$(Your Game Description)
+With only 10 seconds to aim, can you hit your mark? Fight off waves of enemies with your trusty bow.
 
 ### Features
 
- - $(Game Feature 01)
- - $(Game Feature 02)
- - $(Game Feature 03)
+ - Arrows
+ - 2-player coach co-op
+ - playable from browser on tablets and phones!
 
 ### Controls
 
