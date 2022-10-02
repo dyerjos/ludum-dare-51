@@ -20,14 +20,19 @@
 	#define load LoadStorageValue
 #endif
 
+#define DEBUG_MODE 	1 // TODO: commment out for production
+
 //----------------------------------------------------------------------------------
 // Shared Variables Definition (global)
 // NOTE: Those variables are shared between modules through screens.h
 //----------------------------------------------------------------------------------
-GameScreen currentScreen = 0; // 0 is LOGO
+// GameScreen currentScreen = 0; // 0 is LOGO
+GameScreen currentScreen = 1; // 1 is TITLE // TODO: switch back to 0!
 Font font = { 0 };
 Music music = { 0 };
 Sound fxCoin = { 0 };
+
+int endGameConditions = 0; // 1 is WIN, 2 is LOSE, 0 is NEW GAME
 
 // examples of other global variables:
 	// int score = 0;
@@ -36,7 +41,13 @@ Sound fxCoin = { 0 };
 // Local Variables Definition (local to this module)
 //----------------------------------------------------------------------------------
 static const int screenWidth = 800;
+
+#if defined(DEBUG_MODE)
+static const int screenHeight = 800;
+#else
 static const int screenHeight = 450;
+#endif
+
 static const char *gameName = "raylib game template";
 
 // Required variables to manage screen transitions (fade-in, fade-out)
@@ -86,7 +97,7 @@ int main(void)
 
     // Setup and init first screen
     // currentScreen = LOGO; // TODO: renable after testing
-	currentScreen = GAMEPLAY;
+	currentScreen = TITLE;
 
     InitLogoScreen();
 
