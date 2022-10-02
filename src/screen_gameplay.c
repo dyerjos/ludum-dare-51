@@ -4,12 +4,13 @@
 #include "common.h"
 
 extern int endGameConditions;
+
 //--------------------------------------
 // Constants
 //--------------------------------------
 #define MAX_ARROWS		50
-#define MAX_ENEMIES		5      // TODO: change back to 50
-#define MAX_PLAYERS      2
+#define MAX_ENEMIES		5			// TODO: 50 if spawning works
+#define MAX_PLAYERS     2
 #define GRAVITY       	9.81f
 #define GROUND_LEVEL	400
 #define ARROW_SIZE		(Vector2) {5, -20}
@@ -17,7 +18,7 @@ extern int endGameConditions;
 #define ENTITY_SIZE		(Vector2) { 5, 25 }
 #define ARROW_LEN		15
 #define TEN_SEC			600 		// 60fps for 10 seconds
-#define P1_ORIGIN_X		650			// TODO: change back to 40 (650 for testing)
+#define P1_ORIGIN_X		40			// TODO: change back to 40 (650 for testing)
 
 //--------------------------------------
 // Structs
@@ -94,9 +95,9 @@ static int finishScreen = 0;
 
 static bool pause = false;
 
-static entity player[MAX_PLAYERS] = { 0 };
-static projectile arrow[MAX_ARROWS] = { 0 };
-static entity enemy[MAX_ENEMIES] = { 0 };
+entity player[MAX_PLAYERS] = { 0 };
+projectile arrow[MAX_ARROWS] = { 0 };
+entity enemy[MAX_ENEMIES] = { 0 };
 
 static int playerTurn = 0;
 static int enemyTurn = 0;
@@ -139,10 +140,20 @@ void InitGameplayScreen(void)
     framesCounter = 0;
     finishScreen = 0;
 
+	pause = false;
+	entity player[MAX_PLAYERS] = { 0 };
+	projectile arrow[MAX_ARROWS] = { 0 };
+	entity enemy[MAX_ENEMIES] = { 0 };
+	playerTurn = 0;
+	enemyTurn = 0;
+	playersAlive = MAX_PLAYERS;
+	enemiesLeft = MAX_ENEMIES;
+	isAiming = 0;
+	numberOfActiveArrows = 0;
+	numberOfActiveEnemies = 0;
+
 	InitPlayers();
 	InitEnemies();
-
-	//* load textures, level, variables, load musicstream and play music
 }
 
 void UpdateGameplayScreen(void)
@@ -152,11 +163,11 @@ void UpdateGameplayScreen(void)
 	if (!pause) {
 		if (playersAlive == 0) {
 			endGameConditions = 2;
-			finishScreen = 1;
+			// finishScreen = 1; // don't use end screen
 		}
 		if (enemiesLeft == 0) {
 			endGameConditions = 1;
-			finishScreen = 1;
+			// finishScreen = 1; // don't use end screen
 		}
 		if (!player[playerTurn].hasFired)
 			PlayerAim(playerTurn);
@@ -191,7 +202,9 @@ void DrawGameplayScreen(void)
 
 void UnloadGameplayScreen(void)
 {
-    // TODO: unload texture, sound, music stream
+	MemFree(player);
+	MemFree(enemy);
+	MemFree(arrow);
 }
 
 int FinishGameplayScreen(void)
@@ -269,7 +282,6 @@ static void InitEnemies(void)
 		enemy[i].isAlive = 1;
 		enemy[i].color = RAYWHITE;
 		numberOfActiveEnemies += 1;
-		enemiesLeft += 1;
 	}
 }
 
@@ -378,8 +390,8 @@ static void UpdateArrow(void)
 				arrow[i].isCollided = 1;
 				TraceLog(LOG_WARNING, "collision with enemy");
 				int random_offset = GetRandomValue(0, 10);
-				arrow[i].head.y += (10 + random_offset);
-				arrow[i].tail.y += (10 + random_offset);
+				arrow[i].head.y += 20;
+				arrow[i].tail.y += 20;
 				arrow[i].isInFlight = 0;
 				enemy[j].isAlive = 0; // dead
 				enemy[j].size = (Vector2) {25, 5};
@@ -444,15 +456,20 @@ static void DrawAim(void)
 
 static void DrawHUD(void)
 {
-	// TODO
+	if (endGameConditions == 0){
+		char *xx = malloc(64);
+		sprintf(xx, "PLAYER %i:", playerTurn + 1);
+		DrawTextEx(font, xx, (Vector2){ 20, 10 }, font.baseSize*0.5, 4, player[playerTurn].color);
+	} else if (endGameConditions == 1)
+		DrawTextEx(font, "YOU WIN!", (Vector2){ 20, 10 }, font.baseSize*0.5, 4, DARKBLUE);
+	else if (endGameConditions == 2)
+		DrawTextEx(font, "YOU LOSE!", (Vector2){ 20, 10 }, font.baseSize*0.5, 4, MAROON);
+
+
 }
 
 static void DebugInfo(void)
 {
-	char *xx = malloc(64);
-	sprintf(xx, "PLAYER %i:", playerTurn + 1);
-    DrawTextEx(font, xx, (Vector2){ 20, 10 }, font.baseSize*0.5, 4, player[playerTurn].color);
-
 	int debug_window_offset = 460;
 
 	char *s = malloc(32);

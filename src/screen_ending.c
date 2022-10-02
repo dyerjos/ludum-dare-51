@@ -41,9 +41,9 @@ void DrawEndingScreen(void)
 	if (endGameConditions == 1)
 		DrawTextEx(font, "YOU WIN!", (Vector2){ 20, 10 }, font.baseSize*0.5, 4, DARKBLUE);
 	else if (endGameConditions == 2)
-		DrawTextEx(font, "YOU LOSE!", (Vector2){ 20, 10 }, font.baseSize*0.5, 4, DARKBLUE);
+		DrawTextEx(font, "YOU LOSE!", (Vector2){ 20, 10 }, font.baseSize*0.5, 4, MAROON);
 
-    DrawText("PRESS ENTER or TAP to RETURN to TITLE SCREEN", 120, 220, 20, DARKBLUE);
+    DrawText("Press ENTER or TAP to return to the main menu", 120, 220, 20, DARKBLUE);
 }
 
 // Ending Screen Unload logic

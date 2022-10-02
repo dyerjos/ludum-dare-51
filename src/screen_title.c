@@ -30,7 +30,6 @@ void UpdateTitleScreen(void)
     {
         //finishScreen = 1;   // OPTIONS
         finishScreen = 2;   // GAMEPLAY
-        // PlaySound(fxCoin);
     }
 }
 
@@ -39,7 +38,7 @@ void DrawTitleScreen(void)
 {
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), WHITE);
     DrawTextEx(font, "Artful Arrows", (Vector2){ 20, 10 }, font.baseSize*1.5, 4, BLACK);
-    DrawText("PRESS ENTER or TAP to JUMP to start the game", 120, 220, 20, BLACK);
+    DrawText("Press ENTER or TAP to start the game", 120, 220, 20, BLACK);
 }
 
 // Title Screen Unload logic

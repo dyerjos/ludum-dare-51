@@ -20,14 +20,14 @@
 	#define load LoadStorageValue
 #endif
 
-#define DEBUG_MODE 	1 // TODO: commment out for production
+// #define DEBUG_MODE 	1 // TODO: commment out for production
 
 //----------------------------------------------------------------------------------
 // Shared Variables Definition (global)
 // NOTE: Those variables are shared between modules through screens.h
 //----------------------------------------------------------------------------------
 // GameScreen currentScreen = 0; // 0 is LOGO
-GameScreen currentScreen = 1; // 1 is TITLE // TODO: switch back to 0!
+GameScreen currentScreen = 0; // 1 is TITLE // TODO: 1 for DEBUGing
 Font font = { 0 };
 Music music = { 0 };
 Sound fxCoin = { 0 };
@@ -96,8 +96,8 @@ int main(void)
 
 
     // Setup and init first screen
-    // currentScreen = LOGO; // TODO: renable after testing
-	currentScreen = TITLE;
+    currentScreen = LOGO; // TODO: for testing
+	// currentScreen = TITLE;
 
     InitLogoScreen();
 
