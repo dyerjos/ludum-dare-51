@@ -1,6 +1,6 @@
 ## Artful Arrows
 
-![Artful Arrows](screenshots/screenshot000.png "Artful Arrows")
+![Artful Arrows](screenshots/screenshot.png "Artful Arrows")
 
 ### Description
 
