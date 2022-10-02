@@ -14,14 +14,10 @@ With only 10 seconds to aim, can you hit your mark? Fight off waves of enemies w
 
 ### Controls
 
-Keyboard:
- - $(Game Control 01)
- - $(Game Control 02)
- - $(Game Control 03)
+
 
 ### Screenshots
 
-_TODO: Show your game to the world, animated GIFs recommended!._
 
 ### Developers
 
