@@ -120,7 +120,7 @@ static int numberOfActiveEnemies = 0;
 static void InitPlayers(void);
 static void InitEnemies(void);
 static void ActivateArrow(void);
-static void PlayerAim(int playerTurn);
+static void PlayerAim(void);
 static void UpdateArrow(void);
 static void DrawPlayers(void);
 static void DrawEnemies(void);
@@ -140,17 +140,17 @@ void InitGameplayScreen(void)
     framesCounter = 0;
     finishScreen = 0;
 
-	pause = false;
-	entity player[MAX_PLAYERS] = { 0 };
-	projectile arrow[MAX_ARROWS] = { 0 };
-	entity enemy[MAX_ENEMIES] = { 0 };
-	playerTurn = 0;
-	enemyTurn = 0;
-	playersAlive = MAX_PLAYERS;
-	enemiesLeft = MAX_ENEMIES;
-	isAiming = 0;
-	numberOfActiveArrows = 0;
-	numberOfActiveEnemies = 0;
+	// pause = false;
+	// player[MAX_PLAYERS] = nu;
+	// arrow[MAX_ARROWS] = { 0 };
+	// enemy[MAX_ENEMIES] = { 0 };
+	// playerTurn = 0;
+	// enemyTurn = 0;
+	// playersAlive = MAX_PLAYERS;
+	// enemiesLeft = MAX_ENEMIES;
+	// isAiming = 0;
+	// numberOfActiveArrows = 0;
+	// numberOfActiveEnemies = 0;
 
 	InitPlayers();
 	InitEnemies();
@@ -170,7 +170,7 @@ void UpdateGameplayScreen(void)
 			// finishScreen = 1; // don't use end screen
 		}
 		if (!player[playerTurn].hasFired)
-			PlayerAim(playerTurn);
+			PlayerAim();
 		else if (arrowIsMoving()){
 			UpdateArrow();
 		} else {
@@ -303,7 +303,7 @@ static void ActivateArrow(void)
 	arrow[arrowId].potential_end_x = fabsf(arrow[arrowId].range + arrow[arrowId].head.x);
 }
 
-static void BowAimed()
+static void BowAimed(void)
 {
 	player[playerTurn].bow.aimingPower = sqrt(pow(mousePosOnRelease.x - mousePosOnClick.x, 2) + pow(mousePosOnRelease.y - mousePosOnClick.y, 2));
 
@@ -321,7 +321,7 @@ static void BowAimed()
 }
 
 
-static void PlayerAim(int playerTurn)
+static void PlayerAim(void)
 {
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && isAiming == 0 && !Vector2Equals(GetMousePosition(), Vector2Zero())) {
 		isAiming = 1;

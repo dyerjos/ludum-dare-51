@@ -197,8 +197,13 @@ endif
 #  -std=gnu99           defines C language mode (GNU C from 1999 revision)
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -Wno-unused-value    ignore unused return values of some functions (i.e. fread())
+#  -Wextra		 enables some extra warning flags that are not enabled by -Wall
+#  -Werror		Make all warnings into errors
+#  -Wwrite-strings		Issues a diagnostic message if const char * is converted to (non-const) char *.
+#  -Wformat-security	use of format functions may cause security problems
+#  -Wpedantic	issue all the warnings demanded by strict ISO C and ISO C++
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
-CFLAGS = -std=c99 -Wall -Wno-missing-braces -Wunused-result -D_DEFAULT_SOURCE
+CFLAGS = -std=c99 -Wall -Wextra -Werror -Wwrite-strings -Wno-missing-braces -Wunused-result -Wformat-security -Wpedantic -D_DEFAULT_SOURCE
 
 ifeq ($(BUILD_MODE),DEBUG)
     CFLAGS += -g -D_DEBUG

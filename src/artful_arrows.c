@@ -60,7 +60,7 @@ static int transToScreen = -1;
 //----------------------------------------------------------------------------------
 // Local Functions Declaration
 //----------------------------------------------------------------------------------
-static void ChangeToScreen(int screen);     // Change to screen, no transition effect
+// static void ChangeToScreen(int screen);     // Change to screen, no transition effect
 
 static void TransitionToScreen(int screen); // Request transition to next screen
 static void UpdateTransition(void);         // Update transition effect
@@ -142,31 +142,33 @@ int main(void)
 //----------------------------------------------------------------------------------
 // Module specific Functions Definition
 //----------------------------------------------------------------------------------
-// Change to next screen, no transition
-static void ChangeToScreen(int screen)
-{
-    // Unload current screen
-    switch (currentScreen)
-    {
-        case LOGO: UnloadLogoScreen(); break;
-        case TITLE: UnloadTitleScreen(); break;
-        case GAMEPLAY: UnloadGameplayScreen(); break;
-        case ENDING: UnloadEndingScreen(); break;
-        default: break;
-    }
+// Change to next screen, no transition (not currently in use)
+/*
+	static void ChangeToScreen(int screen)
+	{
+		// Unload current screen
+		switch (currentScreen)
+		{
+			case LOGO: UnloadLogoScreen(); break;
+			case TITLE: UnloadTitleScreen(); break;
+			case GAMEPLAY: UnloadGameplayScreen(); break;
+			case ENDING: UnloadEndingScreen(); break;
+			default: break;
+		}
 
-    // Init next screen
-    switch (screen)
-    {
-        case LOGO: InitLogoScreen(); break;
-        case TITLE: InitTitleScreen(); break;
-        case GAMEPLAY: InitGameplayScreen(); break;
-        case ENDING: InitEndingScreen(); break;
-        default: break;
-    }
+		// Init next screen
+		switch (screen)
+		{
+			case LOGO: InitLogoScreen(); break;
+			case TITLE: InitTitleScreen(); break;
+			case GAMEPLAY: InitGameplayScreen(); break;
+			case ENDING: InitEndingScreen(); break;
+			default: break;
+		}
 
-    currentScreen = screen;
-}
+		currentScreen = screen;
+	}
+*/
 
 // Request transition to next screen
 static void TransitionToScreen(int screen)
